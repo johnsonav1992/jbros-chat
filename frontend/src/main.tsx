@@ -5,8 +5,8 @@ import "./reset.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Main from "./views/Main/Main";
-import ChatView from "./views/Main/ChatView/ChatView";
-import ChatWelcome from "./views/Main/ChatWelcome/ChatWelcome";
+import ChatView from "./views/ChatView/ChatView";
+import ChatWelcome from "./views/ChatWelcome/ChatWelcome";
 
 const router = createBrowserRouter([
 	{

@@ -1,0 +1,60 @@
+.listItem {
+    display: flex;
+    align-items: center;
+    width: 93%;
+    height: 5rem;
+    border-radius: .3rem;
+}
+
+.unRead {
+    width: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.unRead>div {
+    background-color: rgb(86, 86, 255);
+    height: .6rem;
+    width: .6rem;
+    border-radius: 1rem;
+}
+
+.listItem>img {
+    height: 2.7rem;
+}
+
+.chatInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: .5rem;
+    margin-left: .5rem;
+    padding-right: .3rem;
+    border-bottom: solid .5px rgb(186, 186, 186);
+}
+
+.title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: .3rem;
+}
+
+.title>h1 {
+    font-size: .95rem;
+    font-weight: 500;
+}
+
+.title>h4 {
+    font-size: .8rem;
+    font-weight: 50;
+    color: rgb(105, 105, 105);
+}
+
+.textContent {
+    margin-bottom: .9rem;
+    font-size: .8rem;
+    font-weight: 100;
+    color: rgb(105, 105, 105);
+}

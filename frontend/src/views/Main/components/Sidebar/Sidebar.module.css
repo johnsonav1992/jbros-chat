@@ -1,4 +1,6 @@
 .sidebar {
+    display: flex;
+    flex-direction: column;
     width: 20rem;
     height: 100vh;
     border-right: solid 1px rgb(200, 200, 200);
@@ -23,4 +25,13 @@
 
 .compose>img:hover{
     background-color: rgb(199, 199, 199);
+}
+
+.chatList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    overflow: scroll;
+    flex: 1;
 }
