@@ -1,9 +1,14 @@
-import styles from "./ChatWelcome.module.css"
+import styles from "./ChatWelcome.module.css";
 
 const ChatWelcome = () => {
-  return (
-    <div>ChatWelcome</div>
-  )
-}
+	return (
+		<main className={styles.welcomeScreen}>
+			<div>
+                <h1 className={styles.title}>Welcome to JBros's Chat!!</h1>
+                <h2 className={styles.subTitle}>Enjoy your stay and happy chatting!</h2>
+			</div>
+		</main>
+	);
+};
 
-export default ChatWelcome
+export default ChatWelcome;
