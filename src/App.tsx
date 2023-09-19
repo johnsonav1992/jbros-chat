@@ -1,6 +1,6 @@
 function App() {
   return (
-    <div>Sup brotha</div>
+    <main>Sup brotha</main>
   )
 }
 
