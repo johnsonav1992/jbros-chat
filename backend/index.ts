@@ -10,5 +10,3 @@ io.on( "connection", ( socket: Socket ) => {
 } );
 
 io.listen( 4000 );
-
-console.log('hey!')
