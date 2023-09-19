@@ -1,0 +1,15 @@
+import SearchBar from "./SearchBar/SearchBar"
+import styles from "./Sidebar.module.css"
+
+const Sidebar = () => {
+  return (
+      <div className={styles.sidebar}>
+          <span className={styles.compose}>
+              <img src="/images/icons/icons8-compose-100.png" />
+          </span>
+          <SearchBar />
+    </div>
+  )
+}
+
+export default Sidebar

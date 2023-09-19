@@ -1,0 +1,46 @@
+.searchbarContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchbar {
+    display: flex;
+    align-items: center;
+    border-radius: .3rem;
+    width: 95%;
+    background-color: rgb(194, 194, 194, .4);
+    border: solid .5px rgb(200, 200, 200);
+}
+
+.searchbar>input {
+    background-color: transparent;
+    border: none;
+    width: 80%;
+}
+
+.searchbar>input:focus {
+    outline: none;
+}
+
+.searchIcon {
+    height: 1rem;
+    margin: .4rem;
+    margin-right: .2rem;
+}
+
+.closeContainer {
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeIcon {
+    height: .8rem;
+    cursor: pointer;
+}
+
+.closeIcon:active {
+    opacity: .4;
+}
