@@ -4,9 +4,9 @@ export type ActiveUser = {
 }
 
 export interface ServerToClientEvents {
-    'user-connected': (userName: ActiveUser['userName']) => void;
+    'user-connected': ( userName: ActiveUser['userName'] ) => void;
 }
 
 export interface ClientToServerEvents {
-    'new-user': (submittedUserName: ActiveUser['userName']) => void;
+    'new-user': ( submittedUserName: ActiveUser['userName'] ) => void;
 }
