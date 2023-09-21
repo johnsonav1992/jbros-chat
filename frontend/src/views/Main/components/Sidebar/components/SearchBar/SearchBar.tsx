@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./SearchBar.module.css";
+import SearchIcon from "./components/SearchIcon/SearchIcon";
 
 const SearchBar = () => {
 	const [isfocused, setIsFocused] = useState(false);
@@ -7,10 +8,7 @@ const SearchBar = () => {
 	return (
 		<main className={styles.searchbarContainer}>
 			<span className={styles.searchbar}>
-				<img
-					className={styles.searchIcon}
-					src="/images/icons/icons8-search-150.png"
-				/>
+				<SearchIcon />
 				<input
 					onClick={() => setIsFocused(true)}
 					type="text"

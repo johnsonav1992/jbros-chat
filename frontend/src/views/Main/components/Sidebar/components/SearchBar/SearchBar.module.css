@@ -23,12 +23,6 @@
     outline: none;
 }
 
-.searchIcon {
-    height: 1rem;
-    margin: .4rem;
-    margin-right: .2rem;
-}
-
 .closeContainer {
     width: 2rem;
     display: flex;

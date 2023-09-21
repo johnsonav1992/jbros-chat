@@ -1,4 +1,5 @@
 import styles from "./ChatListItem.module.css";
+import ProfileIcon from "./components/ProfileIcon/ProfileIcon";
 
 const ChatListItem = () => {
 	return (
@@ -6,7 +7,7 @@ const ChatListItem = () => {
 			<span className={styles.unRead}>
 				<div />
 			</span>
-			<img src="/images/icons/icons8-person-100.png" />
+			<ProfileIcon />
 			<section className={styles.chatInfo}>
 				<span className={styles.title}>
 					<h1>Alex Johnson</h1>

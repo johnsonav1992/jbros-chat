@@ -20,10 +20,6 @@
     border-radius: 1rem;
 }
 
-.listItem>img {
-    height: 2.7rem;
-}
-
 .chatInfo {
     flex: 1;
     display: flex;

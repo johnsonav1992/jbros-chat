@@ -1,4 +1,5 @@
 import ChatListItem from "./components/ChatListItem/ChatListItem";
+import ComposeIcon from "./components/ComposeIcon/ComposeIcon";
 import SearchBar from "./components/SearchBar/SearchBar";
 import styles from "./Sidebar.module.css";
 
@@ -6,7 +7,7 @@ const Sidebar = () => {
 	return (
 		<div className={styles.sidebar}>
 			<span className={styles.compose}>
-				<img src="/images/icons/icons8-compose-100.png" />
+				<ComposeIcon />
 			</span>
 			<SearchBar />
 			<ul className={styles.chatList}>

@@ -14,20 +14,6 @@
     justify-content: flex-end;
 }
 
-.compose>img {
-    height: 1.2rem;
-    margin: .8rem;
-    padding: .3rem;
-    border-radius: .3rem;
-    background-color: rgb(221, 221, 221);
-    cursor: pointer;
-    transition: background-color .5s;
-}
-
-.compose>img:hover{
-    background-color: rgb(199, 199, 199);
-}
-
 .chatList {
     display: flex;
     flex-direction: column;
