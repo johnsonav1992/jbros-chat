@@ -14,10 +14,14 @@ export type ChatMessageToClientParams ={
     userFrom: ActiveUser['socketId'];
 };
 
-export type ErrorType = {
-    name: 'chatMessageError';
-    message: 'User is not logged on or does not exist.';
-};
+export type ErrorType =
+    {
+        name: 'genericError';
+        message: 'There was an error with your request. Please try again or contact support.';
+    } | {
+        name: 'chatMessageError';
+        message: 'User is not logged on or does not exist.';
+    };
 
 export interface ServerError {
     error: ErrorType;

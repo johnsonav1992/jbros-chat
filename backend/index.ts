@@ -16,7 +16,6 @@ const io = new Server<
 const activeUsers = new Map<Socket['id'], ActiveUser>();
 
 io.on( 'connection', socket => {
-    console.log( socket.id );
 
     // New User Logs In
     socket.on( 'new-user', submittedUserName => {
