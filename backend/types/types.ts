@@ -15,8 +15,8 @@ export type ChatMessageToClientParams ={
 };
 
 export type ErrorType = {
-    name: 'chatMessageError' | ( string & {} );
-    message: string;
+    name: 'chatMessageError';
+    message: 'User is not logged on or does not exist.';
 };
 
 export interface ServerError {
