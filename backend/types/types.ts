@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 export type ActiveUser = {
     socketId: string;
     userName: string;
@@ -14,7 +15,7 @@ export type ChatMessageToClientParams ={
 };
 
 export type ErrorType = {
-    name: 'chatMessageError' | ( string & object );
+    name: 'chatMessageError' | ( string & {} );
     message: string;
 };
 
