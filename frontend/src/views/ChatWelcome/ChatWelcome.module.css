@@ -1,0 +1,40 @@
+.welcomeScreen {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcomeScreen>div {
+    background-image:
+        linear-gradient(25deg,
+            hsl(240deg 100% 20%) 0%,
+            hsl(213, 47%, 38%) 14%,
+            hsl(201, 64%, 39%) 29%,
+            hsl(222, 100%, 38%) 45%,
+            hsl(20deg 100% 44%) 66%,
+            hsl(8, 91%, 52%) 100%);
+    height: 40rem;
+    width: 50rem;
+    padding: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    box-shadow: 0 2rem 3rem 0 rgb(0, 0, 0, .6);
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: 500;
+    text-align: center;
+    color: rgb(255, 0, 0);
+    text-shadow: 0 0 2rem white, 0 0 .2rem white, 0 0 1rem white;
+}
+
+.subTitle {
+    color: white;
+}
