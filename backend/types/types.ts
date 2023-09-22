@@ -29,11 +29,11 @@ export interface ServerError {
 
 export interface ServerToClientEvents {
     'user-connected': ( userName: ActiveUser['userName'] ) => void;
-    'chat-message-to-client': ( params: ChatMessageToClientParams ) => void;
+    'chat-message-receive': ( params: ChatMessageToClientParams ) => void;
     'error': ( error: ServerError ) => void;
 }
 
 export interface ClientToServerEvents {
     'new-user': ( submittedUserName: ActiveUser['userName'] ) => void;
-    'chat-message-sent': ( params: ChatMessageToServerParams ) => void;
+    'chat-message-send': ( params: ChatMessageToServerParams ) => void;
 }

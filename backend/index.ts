@@ -29,11 +29,11 @@ io.on( 'connection', socket => {
     } );
 
     // Chat messages between single users
-    socket.on( 'chat-message-sent', ( { message, userTo } ) => {
+    socket.on( 'chat-message-send', ( { message, userTo } ) => {
         const userExists = !!activeUsers.get( userTo );
 
         if ( userExists ) {
-            socket.to( userTo ).emit( 'chat-message-to-client', {
+            socket.to( userTo ).emit( 'chat-message-receive', {
                 message
                 , userFrom: socket.id
             } );
