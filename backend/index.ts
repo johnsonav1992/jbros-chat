@@ -31,10 +31,16 @@ io.on( 'connection', socket => {
 
     // Chat messages between single users
     socket.on( 'chat-message-sent', ( { message, userTo } ) => {
-        socket.to( userTo ).emit( 'chat-message-to-client', {
-            message
-            , userFrom: socket.id
-        } );
+        const userExists = activeUsers.get( userTo ) != null;
+
+        if ( userExists ) {
+            socket.to( userTo ).emit( 'chat-message-to-client', {
+                message
+                , userFrom: socket.id
+            } );
+        } else {
+            socket._error( { message: 'User is not logged on' } );
+        }
     } );
 
 } );
