@@ -18,7 +18,7 @@ const activeUsers = new Map<Socket['id'], ActiveUser>();
 io.on( 'connection', socket => {
     console.log( socket.id );
 
-    // New User
+    // New User Logs In
     socket.on( 'new-user', submittedUserName => {
         activeUsers.set( socket.id, {
             socketId: socket.id
@@ -29,10 +29,14 @@ io.on( 'connection', socket => {
         console.log( `A new user has logged on - ${ submittedUserName }, id: ${ socket.id }` );
     } );
 
-    // Incoming Chat Messages
-    socket.on( 'chat-message-client', ( { message, userTo } ) => {
-        socket.broadcast.to( userTo ).emit( 'chat-message-server', message );
+    // Chat messages between single users
+    socket.on( 'chat-message-sent', ( { message, userTo } ) => {
+        socket.to( userTo ).emit( 'chat-message-to-client', {
+            message
+            , userFrom: socket.id
+        } );
     } );
+
 } );
 
 io.listen( 4000 );

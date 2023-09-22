@@ -5,21 +5,20 @@ export type ActiveUser = {
 
 export type ChatMessageToServerParams = {
     message: string;
-    userTo: string;
+    userTo: ActiveUser['socketId'];
 };
 
 export type ChatMessageToClientParams ={
     message: string;
-    userFrom: string;
-    userTo: string;
+    userFrom: ActiveUser['socketId'];
 };
 
 export interface ServerToClientEvents {
     'user-connected': ( userName: ActiveUser['userName'] ) => void;
-    'chat-message-server': ( params: ChatMessageToServerParams ) => void;
+    'chat-message-to-client': ( params: ChatMessageToClientParams ) => void;
 }
 
 export interface ClientToServerEvents {
     'new-user': ( submittedUserName: ActiveUser['userName'] ) => void;
-    'chat-message-client': ( params: ChatMessageToClientParams ) => void;
+    'chat-message-sent': ( params: ChatMessageToServerParams ) => void;
 }
