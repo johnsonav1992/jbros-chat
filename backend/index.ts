@@ -16,6 +16,9 @@ const io = new Server<
 const activeUsers = new Map<Socket['id'], ActiveUser>();
 
 io.on( 'connection', socket => {
+    console.log( socket.id );
+
+    // New User
     socket.on( 'new-user', submittedUserName => {
         activeUsers.set( socket.id, {
             socketId: socket.id
@@ -24,6 +27,11 @@ io.on( 'connection', socket => {
         socket.broadcast.emit( 'user-connected', submittedUserName );
 
         console.log( `A new user has logged on - ${ submittedUserName }, id: ${ socket.id }` );
+    } );
+
+    // Incoming Chat Messages
+    socket.on( 'chat-message-client', ( { message, userTo } ) => {
+        socket.broadcast.to( userTo ).emit( 'chat-message-server', message );
     } );
 } );
 
