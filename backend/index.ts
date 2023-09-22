@@ -32,7 +32,6 @@ io.on( 'connection', socket => {
     // Chat messages between single users
     socket.on( 'chat-message-sent', ( { message, userTo } ) => {
         const userExists = activeUsers.get( userTo ) != null;
-        console.log( userExists );
 
         if ( userExists ) {
             socket.to( userTo ).emit( 'chat-message-to-client', {
