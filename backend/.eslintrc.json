@@ -320,12 +320,6 @@
       "@typescript-eslint/naming-convention": [
           "error",
           {
-              "selector": "default",
-              "format": [
-                  "camelCase"
-              ]
-          },
-          {
               "selector": "variable",
               "format": [
                   "camelCase",
@@ -338,12 +332,6 @@
                   "camelCase"
               ],
               "leadingUnderscore": "allow"
-          },
-          {
-              "selector": "memberLike",
-              "format": [
-                  "camelCase"
-              ]
           },
           {
               "selector": "typeLike",
