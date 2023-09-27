@@ -2,8 +2,12 @@ import styles from "./ChatListItem.module.css";
 import ProfileIcon from "./components/ProfileIcon/ProfileIcon";
 
 const ChatListItem = () => {
+    const goToChat = () => {
+        
+    }
+
 	return (
-		<span className={styles.listItem}>
+		<span className={styles.listItem} onClick={goToChat}>
 			<span className={styles.unRead}>
 				<div />
 			</span>

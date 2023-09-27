@@ -12,21 +12,6 @@ const Sidebar = () => {
 			<SearchBar />
 			<ul className={styles.chatList}>
                 <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
-                <ChatListItem />
 			</ul>
 		</div>
 	);

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./reset.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import SocketContextProvider from "./context/SocketContext";
 
 import Main from "./views/Main/Main";
 import ChatView from "./views/ChatView/ChatView";
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<RouterProvider router={router} />
+		<SocketContextProvider>
+			<RouterProvider router={router} />
+		</SocketContextProvider>
 	</React.StrictMode>
 );
