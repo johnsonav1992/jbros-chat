@@ -8,10 +8,18 @@
     background-color: rgb(221, 221, 221);
 }
 
+.homeButton {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    color: rgb(147, 147, 147);
+}
+
 .compose {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .chatList {

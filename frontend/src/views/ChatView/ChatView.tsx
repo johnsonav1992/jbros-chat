@@ -1,21 +1,35 @@
 import styles from "./ChatView.module.css";
-import { useContext } from "react";
-import { socketContext } from "../../context/SocketContext";
+import { useEffect, useState, useContext } from "react";
 import { socket } from "../../context/socket";
+import { useParams } from "react-router-dom";
+import { socketContext } from "../../context/SocketContext";
 
 const ChatView = () => {
-    const { loggedInUsers } = useContext(socketContext)
+	const [message, setMessage] = useState<string[]>([]);
+	const { setChat } = useContext(socketContext);
+	const { chatId } = useParams();
 
-    const sendId = () => {
-        socket.emit('chat-message-send', {message: "Sup bro", userTo: "_s8gWlm0Hi9cHb_0AAAD"})
-    }
-    
+	useEffect(() => {
+		const getData = (message: string) => {
+			setMessage((prev) => {
+				return [...prev, message];
+			});
+		};
+
+		setChat(chatId!);
+
+		socket.emit("join-chatroom", chatId);
+
+		socket.on("receive-chatroom-message", getData);
+
+		return () => {
+			socket.off("receive-chatroom-message", getData);
+		};
+	}, []);
+
 	return (
 		<div className={styles.chatView}>
-            <div>
-                {loggedInUsers}
-                <button onClick={sendId}>Send My Id</button>
-            </div>
+			<div>{message}</div>
 		</div>
 	);
 };

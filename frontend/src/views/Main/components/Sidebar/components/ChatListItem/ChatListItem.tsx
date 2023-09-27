@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./ChatListItem.module.css";
 import ProfileIcon from "./components/ProfileIcon/ProfileIcon";
 
 const ChatListItem = () => {
-    const goToChat = () => {
-        
-    }
+	const navigate = useNavigate();
+
+	const goToChat = () => {
+		navigate(`/chat/someId`);
+	};
 
 	return (
 		<span className={styles.listItem} onClick={goToChat}>

@@ -44,6 +44,25 @@ io.on("connection", (socket) => {
 			});
 		}
 	});
+
+	// Join Chatroom
+	socket.on("join-chatroom", (roomName) => {
+		socket.join(roomName);
+
+		console.log(io.sockets.adapter.rooms);
+	});
+
+	// Leave Chatroom
+	socket.on("leave-chatroom", (roomName) => {
+		socket.leave(roomName);
+
+		console.log(io.sockets.adapter.rooms);
+	});
+
+	// Send Message to Chatroom
+	socket.on("send-chatroom-message", (message, roomName) => {
+		socket.to(roomName).emit("receive-chatroom-message", message);
+	});
 });
 
 io.listen(4000);
