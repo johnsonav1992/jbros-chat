@@ -4,27 +4,73 @@ import ComposeIcon from "./components/ComposeIcon/ComposeIcon";
 import SearchBar from "./components/SearchBar/SearchBar";
 import styles from "./Sidebar.module.css";
 import { socket } from "../../../../context/socket";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { socketContext } from "../../../../context/SocketContext";
 
 const Sidebar = () => {
-    const navigate = useNavigate()
-    const {currentChat} = useContext(socketContext)
+	const navigate = useNavigate();
+	const [rooms, setAllRooms] = useState<string[]>([]);
+	const { currentChat, setChat } = useContext(socketContext);
+	const [isCreating, setIsCreating] = useState(false);
 
-    const goHome = () => {
-        socket.emit("leave-chatroom", currentChat)
-        navigate("/")
-    }
+	const goHome = () => {
+		if (currentChat !== "") {
+			socket.emit("leave-chatroom", currentChat);
+
+			setChat("");
+
+			navigate("/");
+		}
+	};
+
+	const createChatroom = (e: any) => {
+		e.preventDefault();
+
+		const data = e.target[0].value;
+
+		if (currentChat !== "") {
+			socket.emit("leave-chatroom", currentChat);
+		}
+
+		navigate(`/chat/${data}`);
+
+		setIsCreating(false);
+	};
+
+	useEffect(() => {
+		const setRooms = (rooms: string[]) => {
+			console.log(rooms);
+			setAllRooms(rooms);
+		};
+
+		socket.emit("get-all-chatrooms");
+
+		socket.on("all-chatrooms", setRooms);
+
+		return () => {
+			socket.off("all-chatrooms", setRooms);
+		};
+	}, []);
 
 	return (
 		<div className={styles.sidebar}>
-            <span className={styles.compose}>
-                <button onClick={goHome} className={styles.homeButton}>Home</button>
-				<ComposeIcon />
+			<span className={styles.compose}>
+				<button onClick={goHome} className={styles.homeButton}>
+					Home
+				</button>
+				<ComposeIcon onClick={() => setIsCreating(true)} />
+				{isCreating ? (
+					<form onSubmit={createChatroom} className={styles.roomForm}>
+						<h3>Create Room</h3>
+						<input placeholder="Room Name" type="text" />
+					</form>
+				) : undefined}
 			</span>
 			<SearchBar />
 			<ul className={styles.chatList}>
-                <ChatListItem />
+				{rooms.map((room: any) => {
+					return <ChatListItem key={room} name={room} />;
+				})}
 			</ul>
 		</div>
 	);

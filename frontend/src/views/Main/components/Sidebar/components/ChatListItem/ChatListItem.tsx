@@ -1,12 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./ChatListItem.module.css";
 import ProfileIcon from "./components/ProfileIcon/ProfileIcon";
+import { socket } from "../../../../../../context/socket";
+import { useContext } from "react";
+import { socketContext } from "../../../../../../context/SocketContext";
 
-const ChatListItem = () => {
+const ChatListItem = ({ name }: { name: string }) => {
 	const navigate = useNavigate();
+	const { currentChat } = useContext(socketContext);
 
 	const goToChat = () => {
-		navigate(`/chat/someId`);
+		if (name === currentChat) {
+			return;
+		}
+
+		socket.emit("leave-chatroom", currentChat);
+
+		navigate(`/chat/${name}`);
 	};
 
 	return (
@@ -17,7 +27,7 @@ const ChatListItem = () => {
 			<ProfileIcon />
 			<section className={styles.chatInfo}>
 				<span className={styles.title}>
-					<h1>Alex Johnson</h1>
+					<h1>{name}</h1>
 					<h4>3:00 PM</h4>
 				</span>
 				<p className={styles.textContent}>

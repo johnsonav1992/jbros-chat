@@ -45,18 +45,41 @@ io.on("connection", (socket) => {
 		}
 	});
 
-	// Join Chatroom
-	socket.on("join-chatroom", (roomName) => {
-		socket.join(roomName);
+	const getAllRooms = () => {
+		let actualRooms: string[] = [];
 
-		console.log(io.sockets.adapter.rooms);
+		const allRooms = [...io.of("/").adapter.rooms.entries()];
+
+		allRooms.forEach((room) => {
+			if (
+				[...room[1]].some((setRoom) => {
+					return setRoom === room[0];
+				}) === false
+			) {
+				actualRooms.push(room[0]);
+			}
+		});
+
+		return actualRooms;
+	};
+
+	// Join Chatroom
+	socket.on("join-chatroom", async (roomName) => {
+		await socket.join(roomName);
+
+		io.emit("all-chatrooms", getAllRooms());
 	});
 
 	// Leave Chatroom
-	socket.on("leave-chatroom", (roomName) => {
-		socket.leave(roomName);
+	socket.on("leave-chatroom", async (roomName) => {
+		await socket.leave(roomName);
 
-		console.log(io.sockets.adapter.rooms);
+		io.emit("all-chatrooms", getAllRooms());
+	});
+
+	// Get All Chatrooms
+	socket.on("get-all-chatrooms", () => {
+		io.emit("all-chatrooms", getAllRooms());
 	});
 
 	// Send Message to Chatroom

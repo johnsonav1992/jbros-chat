@@ -33,12 +33,14 @@ export interface ServerToClientEvents {
 	"chat-message-receive": (params: ChatMessageToClientParams) => void;
 	error: (error: ServerError) => void;
 	"receive-chatroom-message": (message: string) => void;
+	"all-chatrooms": (rooms: object) => void;
 }
 
 export interface ClientToServerEvents {
 	"new-user": (submittedUserName: ActiveUser["userName"]) => void;
 	"chat-message-send": (params: ChatMessageToServerParams) => void;
-    "join-chatroom": (roomName: string) => void;
-    "leave-chatroom": (roomName: string) => void;
+	"join-chatroom": (roomName: string) => void;
+	"leave-chatroom": (roomName: string) => void;
 	"send-chatroom-message": (message: string, roomName: string) => void;
+	"get-all-chatrooms": () => void;
 }
