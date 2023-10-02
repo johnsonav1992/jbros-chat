@@ -5,7 +5,11 @@ import { socket } from "../../../../../../context/socket";
 import { useContext } from "react";
 import { socketContext } from "../../../../../../context/SocketContext";
 
-const ChatListItem = ({ name }: { name: string }) => {
+interface Props {
+	name: string;
+}
+
+const ChatListItem = ({ name }: Props) => {
 	const navigate = useNavigate();
 	const { currentChat } = useContext(socketContext);
 

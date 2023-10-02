@@ -10,20 +10,20 @@ import { socketContext } from "../../../../context/SocketContext";
 const Sidebar = () => {
 	const navigate = useNavigate();
 	const [rooms, setAllRooms] = useState<string[]>([]);
-	const { currentChat, setChat } = useContext(socketContext);
+	const { currentChat, setCurrentChat } = useContext(socketContext);
 	const [isCreating, setIsCreating] = useState(false);
 
 	const goHome = () => {
 		if (currentChat !== "") {
 			socket.emit("leave-chatroom", currentChat);
 
-			setChat("");
+			setCurrentChat("");
 
 			navigate("/");
 		}
 	};
 
-	const createChatroom = (e: any) => {
+	const createChatroom = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const data = e.target[0].value;

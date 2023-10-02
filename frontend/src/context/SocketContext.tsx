@@ -5,7 +5,7 @@ import { InitialSocketContext } from "../types/InitialSocketContext";
 const intialContext: InitialSocketContext = {
 	loggedInUsers: [],
 	currentChat: "",
-	setChat: () => {},
+	setCurrentChat: () => {},
 };
 
 export const socketContext = createContext(intialContext);
@@ -28,12 +28,10 @@ const SocketContextProvider = ({ children }: PropsWithChildren) => {
 		};
 	}, []);
 
-	const setChat = (chatId: string) => {
-		setCurrentChat(chatId);
-	};
-
 	return (
-		<socketContext.Provider value={{ loggedInUsers, currentChat, setChat }}>
+		<socketContext.Provider
+			value={{ loggedInUsers, currentChat, setCurrentChat }}
+		>
 			{children}
 		</socketContext.Provider>
 	);

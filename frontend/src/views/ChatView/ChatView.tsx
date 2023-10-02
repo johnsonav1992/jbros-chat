@@ -7,7 +7,7 @@ import { MessageBody } from "../../types/MessageBody";
 
 const ChatView = () => {
 	const [messages, setMessages] = useState<MessageBody[]>([]);
-	const { setChat } = useContext(socketContext);
+	const { setCurrentChat } = useContext(socketContext);
 	const { chatId } = useParams();
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ const ChatView = () => {
 			});
 		};
 
-		setChat(chatId!);
+		setCurrentChat(chatId!);
 
 		socket.emit("join-chatroom", chatId);
 
