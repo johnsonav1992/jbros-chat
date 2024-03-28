@@ -1,17 +1,18 @@
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { socketContext } from "../../../../context/SocketContext";
+import { socket } from "../../../../context/socket";
+import styles from "./Sidebar.module.css";
 import ChatListItem from "./components/ChatListItem/ChatListItem";
 import ComposeIcon from "./components/ComposeIcon/ComposeIcon";
 import SearchBar from "./components/SearchBar/SearchBar";
-import styles from "./Sidebar.module.css";
-import { socket } from "../../../../context/socket";
-import { useContext, useEffect, useState } from "react";
-import { socketContext } from "../../../../context/SocketContext";
 
 const Sidebar = () => {
 	const navigate = useNavigate();
 	const [rooms, setAllRooms] = useState<string[]>([]);
 	const { currentChat, setCurrentChat } = useContext(socketContext);
 	const [isCreating, setIsCreating] = useState(false);
+	const formRef = useRef<any>();
 
 	const goHome = () => {
 		if (currentChat !== "") {
@@ -26,9 +27,9 @@ const Sidebar = () => {
 	const createChatroom = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const data = e.target[0].value;
+		const data = ((e.target as HTMLFormElement)[0] as HTMLInputElement).value;
 
-		if (currentChat !== "") {
+		if (currentChat !== "" && currentChat !== data) {
 			socket.emit("leave-chatroom", currentChat);
 		}
 
@@ -39,15 +40,24 @@ const Sidebar = () => {
 
 	useEffect(() => {
 		const setRooms = (rooms: string[]) => {
-			console.log(rooms);
 			setAllRooms(rooms);
 		};
 
-		socket.emit("get-all-chatrooms");
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				formRef.current &&
+				!formRef.current.contains(event.target as HTMLFormElement)
+			) {
+				setIsCreating(false);
+			}
+		};
 
+		document.addEventListener("mousedown", handleClickOutside);
+		socket.emit("get-all-chatrooms");
 		socket.on("all-chatrooms", setRooms);
 
 		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
 			socket.off("all-chatrooms", setRooms);
 		};
 	}, []);
@@ -60,7 +70,11 @@ const Sidebar = () => {
 				</button>
 				<ComposeIcon onClick={() => setIsCreating(true)} />
 				{isCreating ? (
-					<form onSubmit={createChatroom} className={styles.roomForm}>
+					<form
+						onSubmit={createChatroom}
+						className={styles.roomForm}
+						ref={formRef}
+					>
 						<h3>Create Room</h3>
 						<input placeholder="Room Name" type="text" />
 					</form>

@@ -1,19 +1,28 @@
 .chatView {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-height: 100vh;
 }
 
 .chatSpace {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin-bottom: 1.5rem;
+    flex-direction: column-reverse;
+    margin-bottom: 4rem;
+    height: 100vh;
     width: 100%;
-    height: 100%;
+    padding-bottom: 1rem;
+    padding-top: 4rem;
+    box-shadow: inset 0 -1rem 1rem -1rem rgb(188, 188, 188);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .formCont {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -57,6 +66,7 @@
     display: flex;
     align-items: center;
     font-size: .75rem;
+    position: relative;
     color: white;
     margin: .1rem;
     padding-left: .6rem;
@@ -70,8 +80,162 @@
     background-color: rgb(40, 128, 253);
 }
 
+.userMessage.last::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    right: -10px;
+    height: 15px;
+    width: 20px;
+    background: rgb(40, 128, 253);
+    background-attachment: fixed;
+    border-bottom-left-radius: 15px;
+}
+
+.userMessage.last::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    right: -10px;
+    width: 10px;
+    height: 15px;
+    background: white;
+    border-bottom-left-radius: 10px;
+}
+
 .otherUserMessage {
     color: black;
     background-color: rgb(230, 230, 230);
     margin-left: 1.2rem;
 }
+
+.otherUserMessage.otherUserLast::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    left: -10px;
+    height: 15px;
+    width: 20px;
+    background: rgb(230, 230, 230);
+    background-attachment: fixed;
+    border-bottom-right-radius: 15px;
+}
+
+.otherUserMessage.otherUserLast::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: -10px;
+    width: 10px;
+    height: 15px;
+    background: white;
+    border-bottom-right-radius: 10px;
+}
+
+.userLabel {
+    display: flex;
+    justify-content: flex-end;
+    font-size: .5rem;
+    margin: .4rem;
+    margin-right: -.5rem;
+    color: rgb(183, 183, 183);
+}
+
+.otherUserLabel {
+    display: flex;
+    font-size: .5rem;
+    margin: .4rem;
+    margin-left: -.5rem;
+    color: rgb(183, 183, 183);
+}
+
+.usernameSpan {
+    display: flex;
+    justify-content: center;
+    min-width: 5rem;
+}
+
+.chatTopBar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 0;
+    right: 0;
+    height: 3.5rem;
+    width: 100%;
+    background-color: rgba(232, 232, 232, 0.6);
+    backdrop-filter: blur(25px);
+    z-index: 9999;
+    border-bottom: 1px solid rgb(231, 231, 231);
+    box-shadow: 0 0 .1rem 0 rgb(204, 204, 204);
+}
+
+.chatTopBar>p {
+    padding-left: 1rem;
+    font-size: .8rem;
+    color: rgb(116, 116, 116);
+    font-weight: 400;
+}
+
+.chatTopBar>p>strong {
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+}
+
+.chatAnimation {
+    animation: chatFlyIn .5s forwards;
+}
+
+.chatAnimationSmall {
+    animation: chatFlyInSmall .5s forwards;
+}
+
+@keyframes chatFlyIn {
+    0% {
+        translate: 0 3rem;
+        opacity: 0;
+        height: 0;
+    }
+
+    100% {
+        translate: 0 0;
+        opacity: 1;
+        height: 52px;
+    }
+}
+
+@keyframes chatFlyInSmall {
+    0% {
+        translate: 0 3rem;
+        opacity: 0;
+        height: 0;
+    }
+
+    100% {
+        translate: 0 0;
+        opacity: 1;
+        height: 31px;
+    }
+}
+
+/* @media (max-width: 1250px) {
+    .submitForm>input {
+        width: 95%;
+    }
+
+    .formCont {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+
+    .chatView {
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+} */

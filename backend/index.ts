@@ -1,4 +1,5 @@
 import { Server, Socket } from "socket.io";
+import { PrismaClient } from "@prisma/client";
 import {
 	ActiveUser,
 	ClientToServerEvents,
@@ -9,21 +10,30 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents>({
 	cors: { origin: "*" },
 });
 
+const prisma = new PrismaClient();
+
 const activeUsers = new Map<Socket["id"], ActiveUser>();
 
 io.on("connection", (socket) => {
+	console.log(Array.from(activeUsers.values()));
 	// New User Logs In
-	socket.on("new-user", (submittedUserName) => {
-		activeUsers.set(socket.id, {
-			socketId: socket.id,
-			userName: submittedUserName,
+	socket.on("new-user", (submittedUserName, validating) => {
+		const isTaken = Array.from(activeUsers.values()).some((user) => {
+			return user.userName === submittedUserName;
 		});
 
-		socket.broadcast.emit("user-connected", submittedUserName);
+		if (!isTaken) {
+			socket.emit("user-connected", submittedUserName);
 
-		console.log(
-			`A new user has logged on - ${submittedUserName}, id: ${socket.id}`
-		);
+			return activeUsers.set(socket.id, {
+				socketId: socket.id,
+				userName: submittedUserName,
+			});
+		}
+
+		socket.emit("user-exists", submittedUserName, validating);
+
+		console.log(Array.from(activeUsers.values()));
 	});
 
 	// Chat messages between single users
@@ -59,7 +69,7 @@ io.on("connection", (socket) => {
 				actualRooms.push(room[0]);
 			}
 		});
-
+		console.log(actualRooms);
 		return actualRooms;
 	};
 
@@ -67,13 +77,34 @@ io.on("connection", (socket) => {
 	socket.on("join-chatroom", async (roomName) => {
 		await socket.join(roomName);
 
+		const foundRoom = await prisma.chatRoom.findFirst({
+			where: { name: roomName },
+		});
+		console.log(foundRoom);
+		if (foundRoom) {
+			console.log("Room already exists");
+			const messages = await prisma.message.findMany({
+				where: { chatroomId: foundRoom?.id },
+			});
+			io.emit("get-chatroom-messages", messages);
+		} else {
+			const newRoom = await prisma.chatRoom.create({
+				data: { name: roomName },
+			});
+			io.emit("get-chatroom-messages", []);
+			console.log(newRoom);
+		}
 		io.emit("all-chatrooms", getAllRooms());
 	});
 
 	// Leave Chatroom
 	socket.on("leave-chatroom", async (roomName) => {
 		await socket.leave(roomName);
-
+		if (!getAllRooms().find((room) => roomName === room)) {
+			await prisma.chatRoom.deleteMany({
+				where: { name: roomName },
+			});
+		}
 		io.emit("all-chatrooms", getAllRooms());
 	});
 
@@ -83,9 +114,19 @@ io.on("connection", (socket) => {
 	});
 
 	// Send Message to Chatroom
-	socket.on("send-chatroom-message", (message, roomName) => {
-		socket.to(roomName).emit("receive-chatroom-message", message);
+	socket.on("send-chatroom-message", async (message, roomName, username) => {
+		socket.to(roomName).emit("receive-chatroom-message", message, username);
+		const foundRoom = await prisma.chatRoom.findFirst({
+			where: { name: roomName },
+		});
+		await prisma.message.create({
+			data: {
+				message: message,
+				username: username,
+				chatRoom: { connect: { id: foundRoom?.id } },
+			},
+		});
 	});
 });
 
-io.listen(4000);
+prisma.chatRoom.deleteMany({}).then(() => io.listen(4000));

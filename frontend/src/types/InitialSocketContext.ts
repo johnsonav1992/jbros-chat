@@ -1,5 +1,8 @@
 export interface InitialSocketContext {
 	loggedInUsers: string[];
 	currentChat: string;
-	setCurrentChat: (chatId: string) => void;
+	currentUser: string;
+	error: string;
+	setCurrentUser: (username: string) => void;
+	setCurrentChat: React.Dispatch<React.SetStateAction<string>>;
 }
