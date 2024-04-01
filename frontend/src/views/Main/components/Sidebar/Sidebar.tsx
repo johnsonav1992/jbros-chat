@@ -82,7 +82,7 @@ const Sidebar = () => {
 			</span>
 			<SearchBar />
 			<ul className={styles.chatList}>
-				{rooms.map((room: any) => {
+				{rooms.map((room: string) => {
 					return <ChatListItem key={room} name={room} />;
 				})}
 			</ul>

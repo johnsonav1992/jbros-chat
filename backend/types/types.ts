@@ -33,7 +33,7 @@ export interface ServerToClientEvents {
 	"chat-message-receive": (params: ChatMessageToClientParams) => void;
 	error: (error: ServerError) => void;
 	"receive-chatroom-message": (message: string, username: string) => void;
-	"get-chatroom-messages": (messages: any) => void;
+	"get-chatroom-messages": (messages: Message[]) => void;
 	"all-chatrooms": (rooms: object) => void;
 	"user-exists": (username: string, validation: boolean) => void;
 }
@@ -53,4 +53,11 @@ export interface ClientToServerEvents {
 		username: string
 	) => void;
 	"get-all-chatrooms": () => void;
+}
+
+export interface Message {
+	id: number;
+	message: string;
+	username: string;
+	chatroomId: number;
 }

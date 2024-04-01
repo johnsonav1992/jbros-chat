@@ -14,9 +14,7 @@ const ChatListItem = ({ name }: Props) => {
 	const { currentChat } = useContext(socketContext);
 
 	const goToChat = () => {
-		if (name === currentChat) {
-			return;
-		}
+		if (name === currentChat) return;
 
 		socket.emit("leave-chatroom", currentChat);
 

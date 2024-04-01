@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import {
 	ActiveUser,
 	ClientToServerEvents,
+	Message,
 	ServerToClientEvents,
 } from "./types/types";
 
@@ -61,12 +62,14 @@ io.on("connection", (socket) => {
 		const allRooms = [...io.of("/").adapter.rooms.entries()];
 
 		allRooms.forEach((room) => {
-			if (
-				[...room[1]].some((setRoom) => {
-					return setRoom === room[0];
-				}) === false
-			) {
-				actualRooms.push(room[0]);
+			const roomUserIds = [...room[1]];
+			const roomName = room[0];
+			const noneMatch = !roomUserIds.some((id) => {
+				return id === roomName;
+			});
+
+			if (noneMatch) {
+				actualRooms.push(roomName);
 			}
 		});
 		console.log(actualRooms);
@@ -83,7 +86,7 @@ io.on("connection", (socket) => {
 		console.log(foundRoom);
 		if (foundRoom) {
 			console.log("Room already exists");
-			const messages = await prisma.message.findMany({
+			const messages: Message[] = await prisma.message.findMany({
 				where: { chatroomId: foundRoom?.id },
 			});
 			io.emit("get-chatroom-messages", messages);
