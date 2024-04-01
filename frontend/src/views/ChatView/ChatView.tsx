@@ -1,5 +1,5 @@
 import styles from "./ChatView.module.css";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { socket } from "../../context/socket";
 import { useParams } from "react-router-dom";
 import { socketContext } from "../../context/SocketContext";
@@ -7,6 +7,7 @@ import { MessageBody } from "../../types/MessageBody";
 
 const ChatView = () => {
 	const [messages, setMessages] = useState<MessageBody[]>([]);
+	const messageInput = useRef<HTMLInputElement>(null);
 	const { setCurrentChat, currentUser } = useContext(socketContext);
 	const { chatId } = useParams();
 
@@ -48,31 +49,33 @@ const ChatView = () => {
 		};
 	}, [chatId]);
 
-	const sendMessage = (e: any) => {
+	const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const chatSound = new Audio("/the-notification-email-143029.mp3");
 
-		const data = e.target[0].value;
+		if (messageInput.current) {
+			const data = messageInput.current.value;
 
-		if (data.trim() === "") {
-			e.target[0].value = "";
-			return;
+			if (data.trim() === "") {
+				messageInput.current.value = "";
+				return;
+			}
+
+			socket.emit("send-chatroom-message", data, chatId, currentUser);
+
+			setMessages((prev) => {
+				const messageBody = {
+					message: data,
+					username: currentUser,
+				};
+
+				return [...prev, messageBody];
+			});
+
+			chatSound.play();
+			messageInput.current.value = "";
 		}
-
-		socket.emit("send-chatroom-message", data, chatId, currentUser);
-
-		setMessages((prev) => {
-			const messageBody = {
-				message: data,
-				username: currentUser,
-			};
-
-			return [...prev, messageBody];
-		});
-
-		chatSound.play();
-		e.target[0].value = "";
 	};
 
 	const setStyles = ({
@@ -172,7 +175,7 @@ const ChatView = () => {
 			</div>
 			<span className={styles.formCont}>
 				<form className={styles.submitForm} onSubmit={sendMessage}>
-					<input placeholder="Message" type="text" />
+					<input placeholder="Message" type="text" ref={messageInput} />
 				</form>
 			</span>
 		</div>
