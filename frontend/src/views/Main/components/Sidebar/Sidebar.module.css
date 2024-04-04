@@ -8,17 +8,59 @@
     background-color: rgb(221, 221, 221);
 }
 
+.homeButton {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-left: 1rem;
+    color: rgb(147, 147, 147);
+}
+
 .compose {
     width: 100%;
+    position: relative;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .chatList {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1rem;
-    overflow: scroll;
+    margin-top: .5rem;
     flex: 1;
 }
+
+.roomForm {
+    position: absolute;
+    top: 3rem;
+    right: -4.65rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    justify-content: center;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: .1rem .1rem .2rem 0 rgb(0, 0, 0, .3);
+    z-index: 99999;
+}
+
+.roomForm::before {
+    content: " ";
+    position: absolute;
+    top: -17%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}
+
+/* @media (max-width: 1250px) {
+    .sidebar {
+        display: none;
+    }
+} */

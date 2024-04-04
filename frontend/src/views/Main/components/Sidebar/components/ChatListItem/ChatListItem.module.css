@@ -4,6 +4,7 @@
     width: 93%;
     height: 5rem;
     border-radius: .3rem;
+    cursor: pointer;
 }
 
 .unRead {
@@ -38,19 +39,19 @@
 }
 
 .title>h1 {
-    font-size: .95rem;
+    font-size: .90rem;
     font-weight: 500;
 }
 
 .title>h4 {
     font-size: .8rem;
-    font-weight: 50;
-    color: rgb(105, 105, 105);
+    font-weight: 400;
+    color: rgb(123, 123, 123);
 }
 
 .textContent {
     margin-bottom: .9rem;
     font-size: .8rem;
-    font-weight: 100;
+    font-weight: 250;
     color: rgb(105, 105, 105);
 }
